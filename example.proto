@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package example;
+
+message Person {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  repeated string phone_numbers = 4;
+  string website = 5;
+}

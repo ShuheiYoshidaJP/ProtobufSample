@@ -1,0 +1,23 @@
+// Generated Custom Types
+
+import Foundation
+
+{% for type in types.structs where type.accessLevel == "public" and type.name | contains:"Example_" %}
+public struct {{ type.name | replace:"Example_","" }}: Identifiable, Equatable, Hashable, Sendable {
+    public var id: String { return self.id }
+    
+    {% for variable in type.variables %}
+    public var {{ variable.name }}: {% if variable.name == "website" %}URL?{% else %}{{ variable.typeName }}{% endif %}
+    {% endfor %}
+    
+    public init(
+        {% for variable in type.variables %}
+        {{ variable.name }}: {% if variable.name == "website" %}URL?{% else %}{{ variable.typeName }}{% endif %}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ) {
+        {% for variable in type.variables %}
+        self.{{ variable.name }} = {{ variable.name }}
+        {% endfor %}
+    }
+}
+{% endfor %}
